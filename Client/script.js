@@ -1,7 +1,9 @@
 const socket = io.connect('http://localhost:3000', { transports : ['websocket'] });
+socket.emit('connection');
 
 socket.on('colore', function (data) { //ricevo
-  console.log(data);
+  document.body.style.background = data.colore;
+  console.log(data.colore);
 });
 
 function invia(){
@@ -12,7 +14,5 @@ function invia(){
     let colore = getcolore.value;
     document.body.style.background = colore;
     socket.emit('nome-colore',{nome: nome, colore: colore});
-    console.log(nome,colore);
   }
-  
 }
