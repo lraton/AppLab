@@ -1,4 +1,4 @@
-const socket = io.connect('http://localhost:3000', { transports : ['websocket'] });
+const socket = io.connect('http://node:3000', { transports : ['websocket'] });
 socket.emit('connection');
 
 socket.on('colore', function (data) { //ricevo

@@ -2,9 +2,9 @@ const io = require('socket.io')(3000);
 let mysql = require('mysql');
 
 let con = mysql.createConnection({
-  host: "localhost",
+  host: "db",
   user: "root",
-  password: "",
+  password: "mypassword",
   database: "applab"
 });
 
