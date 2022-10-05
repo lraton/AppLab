@@ -17,5 +17,7 @@ function invia(){
     nome=nome.replace(/\s/g, '');
     nome=nome.toLowerCase();
     socket.emit('nome-colore',{nome: nome, colore: colore});
+  }else{
+    alert("Riempi i campi");
   }
 }
