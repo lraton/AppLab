@@ -14,6 +14,8 @@ function invia(){
     let colore = getcolore.value;
     console.log(colore);
     document.body.style.background = colore;
+    nome=nome.replace(/\s/g, '');
+    nome=nome.toLowerCase();
     socket.emit('nome-colore',{nome: nome, colore: colore});
   }
 }
