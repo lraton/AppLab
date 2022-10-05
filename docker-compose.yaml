@@ -2,13 +2,15 @@ version: "3.8"
 
 services:
 
-  apache:
-    image: httpd:latest
-    container_name: my-apache-app
-    ports:
-     - '80:80'
+  web:
+    image: nginx
     volumes:
-     - ./client:/usr/local/apache2/htdocs
+    - ./client:/usr/share/nginx/html
+    ports:
+    - "80:80"
+    environment:
+    - NGINX_HOST=node
+    - NGINX_PORT=3000
   db:
     image: mysql:latest # use latest version of mysql
     container_name: db # add a name for the container
@@ -23,7 +25,7 @@ services:
     ports:
       - '3306:3306'
     depends_on:
-      - "apache"
+      - "web"
   
   phpmyadmin:
     container_name: phpmyadmin
@@ -35,9 +37,6 @@ services:
       PMA_HOST: db   # define the address/hostname of the mysql server eg mysql container name.
       PMA_USER: root # this is the root user to login on startup
       PMA_PASSWORD: mypassword # use the root password to login on startup.
-      # Create a new user on startup (optional)
-      # MYSQL_USER: newuser
-      # MYSQL_PASSWORD: mypassword
 
   node:
     image: "node:latest"
@@ -54,4 +53,4 @@ services:
       - "3000:3000"
     depends_on:
       - "db"
-    command: sh -c "npm install socket.io && npm install mysql && npm start"
+    command: sh -c "npm install express && npm install socket.io && npm install mysql && npm start"

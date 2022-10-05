@@ -1,10 +1,13 @@
-const io = require('socket.io')(3000);
+let app = require('express')();
+let http = require('http').Server(app);
+let io = require('socket.io')(http);
+
 let mysql = require('mysql');
 
 let con = mysql.createConnection({
-  host: "localhost",
+  host: "db",
   user: "root",
-  password: "",
+  password: "mypassword",
   database: "applab"
 });
 
@@ -34,7 +37,7 @@ io.sockets.on('connection', function (socket) {
 
     console.log("- input nome: ",input.nome);
     console.log("- input colore: ",input.colore);
-    
+
     con.query("SELECT * FROM `nome_colore` WHERE nome=?",[input.nome], function (err, checknome) {
       if (err) throw err;
       if(checknome==''){
@@ -53,4 +56,7 @@ io.sockets.on('connection', function (socket) {
   });
 
 
+});
+http.listen(3000, function () {
+  console.log('listening on *:3000');
 });
