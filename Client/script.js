@@ -1,4 +1,4 @@
-const socket = io.connect('http://node:3000', { transports : ['websocket'] });
+const socket = io.connect('http://localhost:3000', { transports : ['websocket'] });
 socket.emit('connection');
 
 socket.on('colore', function (data) { //ricevo
@@ -12,6 +12,7 @@ function invia(){
   if (getnome.checkValidity() && getcolore.checkValidity() && getcolore.value!='null') {
     let nome = getnome.value;
     let colore = getcolore.value;
+    console.log(colore);
     document.body.style.background = colore;
     socket.emit('nome-colore',{nome: nome, colore: colore});
   }

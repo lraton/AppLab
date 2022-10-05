@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="it-IT">
     <head>
-        <title>Prova </title>
-        <script src="http://localhost:3000/socket.io/socket.io.js"></script>
-        <script type="text/javascript" src="script.js"></script>
-        </head>
-        <body>
-          <form id="dati">
-            <label>Nome utente</label><input required type="text" id="input">
-            <br>
-            <label for="cars"> Scegli uno sfondo:</label>
+      <title>Prova </title>
+      <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+      <script type="text/javascript" src="script.js"></script>
+    </head>
+  <body>
+    <form id="dati">
+      <label>Nome utente</label><input required type="text" id="input">
+      <br>
+      <label for="cars"> Scegli uno sfondo:</label>
 
-            <select required id="colors" name="colors">
-                <option value="null">Scegli un'opzione</option>
-                <option value="red">Red</option>
-                <option value="blue">Blue</option>
-                <option value="green">Green</option>
-            </select>
+      <select required id="colors" name="colors">
+        <option value="null">Scegli un'opzione</option>
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+      </select>
 
-            <button type="submit"  onclick="invia(); return false;">Invia</button>
-          </form>
-        </body>
-        </html>
+      <button type="submit"  onclick="invia(); return false;">Invia</button>
+    </form>
+  </body>
+</html>
