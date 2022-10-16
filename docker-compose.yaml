@@ -3,14 +3,11 @@ version: "3.8"
 services:
 
   web:
-    image: nginx
+    image: nginx:latest
     volumes:
     - ./client:/usr/share/nginx/html
     ports:
     - "80:80"
-    environment:
-    - NGINX_HOST=node
-    - NGINX_PORT=3000
   db:
     image: mysql:latest # use latest version of mysql
     container_name: db # add a name for the container
@@ -22,35 +19,33 @@ services:
       MYSQL_PASSWORD: mypassword
     volumes:
       - ./db:/var/lib/mysql
-    ports:
+    expose:
       - '3306:3306'
     depends_on:
       - "web"
   
   phpmyadmin:
-    container_name: phpmyadmin
-    image: phpmyadmin/phpmyadmin:latest
+    image: phpmyadmin:latest
+    restart: always
     ports:
-     - "8082:80"
-    environment:
-      MYSQL_ROOT_PASSWORD: mypassword #(Required) set the password for the root superuser account.
-      PMA_HOST: db   # define the address/hostname of the mysql server eg mysql container name.
-      PMA_USER: root # this is the root user to login on startup
-      PMA_PASSWORD: mypassword # use the root password to login on startup.
+      - 8082:80
+    depends_on:
+      - "db"
 
   node:
     image: "node:latest"
     container_name: "node"
     user: "node"
+    restart: unless-stopped
     working_dir: /home/node/app
     environment:
       - NODE_ENV=production
     volumes:
       - ./server:/home/node/app
+    ports:
+     - "3000:3000"
     expose:
       - "3000"
-    ports:
-      - "3000:3000"
     depends_on:
       - "db"
-    command: sh -c "npm install express && npm install socket.io && npm install mysql && npm start"
+    command: sh -c "npm install && npm start"

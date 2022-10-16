@@ -1,5 +1,22 @@
 const socket = io.connect('http://localhost:3000', { transports : ['websocket'] });
-socket.emit('connection');
+let databaseOn=false;
+
+function load(){
+  socket.emit('connection');
+}
+
+
+socket.on('databaseOn', function(db){
+  databaseOn=db.database;
+  console.log(db.database);
+  if(!databaseOn){
+    let user = prompt("User database");
+    let password = prompt("User password");
+    socket.emit('database',{user:user, password:password});
+  }else{
+    socket.emit('sfondo');
+  }
+})
 
 socket.on('colore', function (data) { //ricevo
   document.body.style.background = data.colore;
